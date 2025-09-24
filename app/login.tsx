@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Logo from "../assets/img/logo.png";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import arrowicon from "../assets/img/rightarrow.png";
 import walletconnecticon from "../assets/img/walletconnect.png";
 import orimg from "../assets/img/orimg.png";
@@ -11,9 +11,28 @@ import greenshieldicon from "../assets/img/greenshield.png";
 import instant from "../assets/img/instant.png";
 import secure from "../assets/img/secure.png";
 import lowfees from "../assets/img/lowfees.png";
+
 const Login = () => {
   return (
     <View style={styles.container}>
+      {/* Back Button */}
+      <TouchableOpacity 
+        onPress={() => router.back()}
+        style={{
+          position: 'absolute',
+          top: 50,
+          left: 20,
+          zIndex: 999,
+          padding: 15,
+          backgroundColor: 'rgba(0,0,0,0.3)',
+          borderRadius: 8,
+        }}
+      >
+        <Text style={{ color: '#FFFFFF', fontSize: 16, fontFamily: 'SpaceGroteskRegular', fontWeight: '500' }}>
+          ← Back
+        </Text>
+      </TouchableOpacity>
+
       <View style={{ gap: 10, alignItems: "center" }}>
         <Image style={{ width: 100, height: 100 }} source={Logo} />
         <Text
@@ -38,6 +57,7 @@ const Login = () => {
           Seamless crypto off-ramping
         </Text>
       </View>
+      
       <View style={{ alignItems: "center", gap: 10, marginTop: 40 }}>
         <Text
           style={{
@@ -60,6 +80,7 @@ const Login = () => {
           Connect your wallet or sign in with Google to {"\n"} continue
         </Text>
       </View>
+      
       <View style={{ gap: 14, marginTop: 40 }}>
         <LinearGradient
           start={{ x: 0, y: 0 }}
@@ -67,69 +88,12 @@ const Login = () => {
           colors={["#3B82F633", "#9333EA33"]}
           style={{ borderRadius: 16, borderWidth: 1, borderColor: "#3B82F64D" }}
         >
-          <Link href={"/login"} asChild>
-            <TouchableOpacity
-              onPress={() => console.log("Tapped")}
-              style={{
-                padding: 20,
-                borderRadius: 16,
-                width: "100%",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <Image
-                    style={{ width: 32, height: 32 }}
-                    source={walletconnecticon}
-                  />
-                  <Text
-                    style={{
-                      color: "white",
-                      textAlign: "center",
-                      fontSize: 18,
-                      fontFamily: "SpaceGroteskRegular",
-                    }}
-                  >
-                    Connect with WalletConnect
-                  </Text>
-                </View>
-                <Image source={arrowicon} />
-              </View>
-            </TouchableOpacity>
-          </Link>
-        </LinearGradient>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Image source={orimg} />
-        </View>
-
-        <Link href={"/login"} asChild>
           <TouchableOpacity
-            onPress={() => console.log("Tapped")}
+            onPress={() => router.push("/home")}
             style={{
               padding: 20,
               borderRadius: 16,
               width: "100%",
-              backgroundColor: "#1F2937",
-              borderWidth: 1,
-              borderColor: "#4B5563",
             }}
           >
             <View
@@ -146,7 +110,10 @@ const Login = () => {
                   gap: 10,
                 }}
               >
-                <Image style={{ width: 32, height: 32 }} source={googleicon} />
+                <Image
+                  style={{ width: 32, height: 32 }}
+                  source={walletconnecticon}
+                />
                 <Text
                   style={{
                     color: "white",
@@ -155,13 +122,63 @@ const Login = () => {
                     fontFamily: "SpaceGroteskRegular",
                   }}
                 >
-                  Continue with Google
+                  Connect with WalletConnect
                 </Text>
               </View>
               <Image source={arrowicon} />
             </View>
           </TouchableOpacity>
-        </Link>
+        </LinearGradient>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Image source={orimg} />
+        </View>
+
+        <TouchableOpacity
+          onPress={() => router.push("/home")}
+          style={{
+            padding: 20,
+            borderRadius: 16,
+            width: "100%",
+            backgroundColor: "#1F2937",
+            borderWidth: 1,
+            borderColor: "#4B5563",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
+              <Image style={{ width: 32, height: 32 }} source={googleicon} />
+              <Text
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  fontSize: 18,
+                  fontFamily: "SpaceGroteskRegular",
+                }}
+              >
+                Continue with Google
+              </Text>
+            </View>
+            <Image source={arrowicon} />
+          </View>
+        </TouchableOpacity>
       </View>
 
       <View
@@ -200,6 +217,7 @@ const Login = () => {
           </Text>
         </View>
       </View>
+      
       <View
         style={{
           flexDirection: "row",
@@ -242,7 +260,7 @@ const Login = () => {
               fontFamily: "SpaceGroteskRegular",
             }}
           >
-            Instant
+            Low Fees
           </Text>
         </View>
       </View>
@@ -259,7 +277,6 @@ const Login = () => {
           By continuing, you agree to our Terms of Service and {"\n"} Privacy
           Policy
         </Text>
-        <View></View>
       </View>
     </View>
   );
