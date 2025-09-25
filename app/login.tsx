@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Logo from "../assets/img/logo.png";
 import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import arrowicon from "../assets/img/rightarrow.png";
 import walletconnecticon from "../assets/img/walletconnect.png";
 import orimg from "../assets/img/orimg.png";
@@ -11,8 +11,29 @@ import greenshieldicon from "../assets/img/greenshield.png";
 import instant from "../assets/img/instant.png";
 import secure from "../assets/img/secure.png";
 import lowfees from "../assets/img/lowfees.png";
-
+import WebView, { WebViewMessageEvent } from "react-native-webview";
+import * as WebBrowser from "expo-web-browser";
+import * as Linking from "expo-linking";
 const Login = () => {
+  const [result, setResult] =
+    useState<WebBrowser.WebBrowserAuthSessionResult | null>(null);
+  const webviewRef = useRef<WebView>(null);
+
+  const redirectUri = Linking.createURL("login");
+  console.log(redirectUri);
+
+  const _handlePressButtonAsync = async () => {
+    // let result = await WebBrowser.openBrowserAsync("http://localhost:5173");
+    const result = await WebBrowser.openAuthSessionAsync(
+      "http://localhost:5173",
+      redirectUri
+    );
+    console.log(result);
+    setResult(result);
+    if (result.type == "success") {
+      router.push("/home");
+    }
+  };
   return (
     <View style={styles.container}>
       {/* Back Button */}
@@ -88,6 +109,60 @@ const Login = () => {
           colors={["#3B82F633", "#9333EA33"]}
           style={{ borderRadius: 16, borderWidth: 1, borderColor: "#3B82F64D" }}
         >
+          <Link href={"/home"} asChild>
+            <TouchableOpacity
+              // onPress={_handlePressButtonAsync}
+              style={{
+                padding: 20,
+                borderRadius: 16,
+                width: "100%",
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <Image
+                    style={{ width: 32, height: 32 }}
+                    source={walletconnecticon}
+                  />
+                  <Text
+                    style={{
+                      color: "white",
+                      textAlign: "center",
+                      fontSize: 18,
+                      fontFamily: "SpaceGroteskRegular",
+                    }}
+                  >
+                    Connect with WalletConnect
+                  </Text>
+                </View>
+                <Image source={arrowicon} />
+              </View>
+            </TouchableOpacity>
+          </Link>
+        </LinearGradient>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+          }}
+        >
+          <Image source={orimg} />
+        </View>
+
+        <Link href={"/login"} asChild>
           <TouchableOpacity
             onPress={() => router.push("/home")}
             style={{
@@ -128,7 +203,7 @@ const Login = () => {
               <Image source={arrowicon} />
             </View>
           </TouchableOpacity>
-        </LinearGradient>
+        </Link>
 
         <View
           style={{
