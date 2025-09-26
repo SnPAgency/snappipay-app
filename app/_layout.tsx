@@ -3,13 +3,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { Slot } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import GradientSplashScreen from "../components/GradientSplashScreen"; // Adjust path as needed
-
-// Hide the native splash screen as soon as React mounts
-// (keeps native splash from flashing before our custom splash renders)
-useEffect(() => {
-  SplashScreen.hideAsync().catch(() => {});
-}, []);
+import GradientSplashScreen from "../components/GradientSplashScreen"; 
 
 export default function RootLayout(): JSX.Element {
   const [appIsReady, setAppIsReady] = useState<boolean>(false);
@@ -23,34 +17,37 @@ export default function RootLayout(): JSX.Element {
     OrbitronRegular: require("../assets/fonts/OrbitronRegular.ttf"),
   });
 
+  // Hide the native splash screen as soon as React mounts
+  useEffect(() => {
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+
   useEffect(() => {
     async function prepare(): Promise<void> {
       try {
-        // Wait for fonts to load
+       
         if (loaded || error) {
-          // Add any other initialization logic here
-          console.log('Fonts loaded, app initialization complete');
-          
-          // Wait a bit more to ensure splash shows for minimum time
-          await new Promise(resolve => setTimeout(resolve, 3500)); // Slightly longer than splash duration
+        
+          // console.log('Fonts loaded, app initialization complete');
+        
+          await new Promise(resolve => setTimeout(resolve, 7000));
           
           setAppIsReady(true);
         }
       } catch (e) {
         console.warn('Error during app initialization:', e);
-        setTimeout(() => setAppIsReady(true), 3500); // Fallback timing
+        setTimeout(() => setAppIsReady(true), 7000); 
       }
     }
 
     prepare();
   }, [loaded, error]);
 
-  // Always show custom splash screen until app is ready
   if (!appIsReady) {
-    return <GradientSplashScreen duration={3000} />;
+    return <GradientSplashScreen />;
   }
 
-  // Show the main app when ready
+  
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Slot />
