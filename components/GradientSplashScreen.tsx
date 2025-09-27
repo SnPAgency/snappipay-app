@@ -131,7 +131,6 @@ export default function GradientSplashScreen({}: GradientSplashScreenProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#020202',
     justifyContent: 'center',
     alignItems: 'center',
   },

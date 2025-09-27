@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView, Image, } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, ScrollView, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Logo from "../assets/Logo.png"
 import { Link } from 'expo-router';
@@ -21,23 +21,33 @@ const PageIndicator = ({ currentPage, totalPages }: { currentPage: number, total
   </View>
 );
 
+// Type definition for page data
+interface PageData {
+  title: string;
+  description: string;
+  image: any; // Image source
+}
+
 export default function OnboardingIndex() {
   const [currentPage, setCurrentPage] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
 
- 
-  const pages = [
+  // Onboarding content data with images
+  const pages: PageData[] = [
     {
       title: "Make payments with crypto.",
-      description: "Pay local vendors instantly in your local currency."
+      description: "Pay local vendors instantly in your local currency.",
+      image: require("../assets/illus1.png") // Replace with your image path
     },
     {
       title: "Fast and secure transaction.",
-      description: "Every transaction can be completed in as little as 20 seconds."
+      description: "Every transaction can be completed in as little as 20 seconds.",
+      image: require("../assets/illus2.png") // Replace with your image path
     },
     {
       title: "Instant Conversion",
-      description: "Convert your crypto to cash in your local currency."
+      description: "Convert your crypto to cash in your local currency.",
+      image: require("../assets/illus3.png") // Replace with your image path
     }
   ];
 
@@ -46,7 +56,6 @@ export default function OnboardingIndex() {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
       
-     
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollTo({
           x: nextPage * width,
@@ -57,9 +66,7 @@ export default function OnboardingIndex() {
   };
 
   const handleGetStarted = () => {
-   
-    // console.log('Navigate to main app');
-   
+    // Navigation logic will be handled by Link component
   };
 
   const handleScroll = (event: any) => {
@@ -70,10 +77,10 @@ export default function OnboardingIndex() {
 
   return (
     <View style={styles.container}>
-    
+      {/* Logo at top */}
       <View style={styles.logoContainer}>
         <Image
-          source={Logo} // Your PNG logo path
+          source={Logo}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -91,7 +98,20 @@ export default function OnboardingIndex() {
       >
         {pages.map((page, index) => (
           <View key={index} style={styles.page}>
-            <View style={styles.contentContainer}>
+            {/* Image in the center */}
+            <View
+ 
+  style={styles.imageContainer}
+>
+              <Image
+                source={page.image}
+                style={styles.pageImage}
+                resizeMode="contain"
+              />
+            </View>
+            
+            {/* Text content below image, above button */}
+            <View style={styles.textContainer}>
               <Text style={styles.title}>{page.title}</Text>
               <Text style={styles.description}>{page.description}</Text>
             </View>
@@ -109,7 +129,6 @@ export default function OnboardingIndex() {
             <Text style={styles.continueButtonText}>Continue</Text>
           </TouchableOpacity>
         ) : (
-         
           <Link href={'/login'} style={styles.getStartedButton} onPress={handleGetStarted}>
             <Text style={styles.getStartedButtonText}>Get Started</Text>
           </Link>
@@ -132,7 +151,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: width * 0.5,
-    height: 40, // Adjust based on your logo aspect ratio
+    height: 40,
     maxWidth: 250,
   },
   scrollView: {
@@ -144,17 +163,29 @@ const styles = StyleSheet.create({
   page: {
     width: width,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-    marginTop: 270,
-    
+    paddingHorizontal: 20,
+    justifyContent: 'space-between', // Distribute space evenly
   },
-  contentContainer: {
+  imageContainer: {
+    flex: 1, // Takes up the main center space
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 0,
+
+  },
+  pageImage: {
+    width: width * 0.7, // 70% of screen width
+    height: height * 0.5, // 35% of screen height
+    maxWidth: 500,
+    maxHeight: 500,
+    borderRadius: 1000
+ 
+  },
+  textContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    maxWidth: width * 0.85,
-   
+    paddingBottom: 20, // Space above indicators
+    paddingHorizontal: 10,
   },
   title: {
     fontSize: 22,
@@ -162,22 +193,15 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: 'center',
     marginBottom: 16,
-    fontFamily: 'Inter', // Use your custom font if available
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#cccccc',
-    textAlign: 'center',
-    marginBottom: 24,
-    fontWeight: '500',
     fontFamily: 'Inter',
   },
   description: {
     fontSize: 16,
-    color: '#888888',
+    color: '#f9fafb',
     textAlign: 'center',
     lineHeight: 24,
     marginBottom: 40,
+    fontWeight: 400,
     fontFamily: 'InterRegular',
   },
   indicatorContainer: {
@@ -207,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#755ae2',
     paddingVertical: 18,
     paddingHorizontal: 32,
-    borderRadius: 30,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#ffffff',
@@ -220,10 +244,10 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   getStartedButton: {
-    backgroundColor: '#755ae2', // Blue accent color for final button
+    backgroundColor: '#755ae2',
     paddingVertical: 18,
     paddingHorizontal: 32,
-    borderRadius: 30,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#007AFF',
@@ -237,13 +261,13 @@ const styles = StyleSheet.create({
   },
   continueButtonText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '400',
     color: '#fff',
     fontFamily: 'Manrope',
   },
   getStartedButtonText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '400',
     color: '#ffffff',
     fontFamily: 'Manrope',
     textAlign: 'center'
