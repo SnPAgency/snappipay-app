@@ -1,12 +1,13 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { Slot, Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { Slot } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import GradientSplashScreen from "../components/GradientSplashScreen"; 
 
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
+export default function RootLayout(): JSX.Element {
+  const [appIsReady, setAppIsReady] = useState<boolean>(false);
+  
   const [loaded, error] = useFonts({
     SpaceGroteskRegular: require("../assets/fonts/SpaceGrotesk-Regular.ttf"),
     SpaceGroteskBold: require("../assets/fonts/SpaceGrotesk-Bold.ttf"),
@@ -16,23 +17,38 @@ export default function RootLayout() {
     OrbitronRegular: require("../assets/fonts/OrbitronRegular.ttf"),
   });
 
+  // Hide the native splash screen as soon as React mounts
   useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    async function prepare(): Promise<void> {
+      try {
+       
+        if (loaded || error) {
+        
+          // console.log('Fonts loaded, app initialization complete');
+        
+          await new Promise(resolve => setTimeout(resolve, 7000));
+          
+          setAppIsReady(true);
+        }
+      } catch (e) {
+        console.warn('Error during app initialization:', e);
+        setTimeout(() => setAppIsReady(true), 7000); 
+      }
     }
+
+    prepare();
   }, [loaded, error]);
 
-  if (!loaded && !error) {
-    return null;
+  if (!appIsReady) {
+    return <GradientSplashScreen />;
   }
 
+  
   return (
-    // <Stack>
-    //   <Stack.Screen name='index' options={{ title: "Welcome" }} />
-    //   <Stack.Screen name='home' options={{ title: "Home" }} />
-    //   <Stack.Screen name='login' options={{ title: "Login" }} />
-    //   <Stack.Screen name='pay' options={{ title: "Pay" }} />
-    // </Stack>
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Slot />
     </GestureHandlerRootView>

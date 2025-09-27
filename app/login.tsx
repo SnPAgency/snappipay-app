@@ -1,19 +1,15 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Logo from "../assets/img/logo.png";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
-import arrowicon from "../assets/img/rightarrow.png";
-import walletconnecticon from "../assets/img/walletconnect.png";
-import orimg from "../assets/img/orimg.png";
-import googleicon from "../assets/img/google.png";
-import greenshieldicon from "../assets/img/greenshield.png";
-import instant from "../assets/img/instant.png";
-import secure from "../assets/img/secure.png";
-import lowfees from "../assets/img/lowfees.png";
+
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import * as WebBrowser from "expo-web-browser";
 import * as Linking from "expo-linking";
+
+const { width, height } = Dimensions.get('window');
+
 const Login = () => {
   const [result, setResult] =
     useState<WebBrowser.WebBrowserAuthSessionResult | null>(null);
@@ -22,268 +18,74 @@ const Login = () => {
   const redirectUri = Linking.createURL("login");
   console.log(redirectUri);
 
-  const _handlePressButtonAsync = async () => {
-    // let result = await WebBrowser.openBrowserAsync("http://localhost:5173");
-    const result = await WebBrowser.openAuthSessionAsync(
-      "http://localhost:5173",
-      redirectUri
-    );
-    console.log(result);
-    setResult(result);
-    if (result.type == "success") {
-      router.push("/home");
-    }
-  };
+  // const _handlePressButtonAsync = async () => {
+  //   let result = await WebBrowser.openBrowserAsync("http://localhost:5173");
+  //   const result = await WebBrowser.openAuthSessionAsync(
+  //     "http://localhost:5173",
+  //     redirectUri
+  //   );
+  //   console.log(result);
+  //   setResult(result);
+  //   if (result.type == "success") {
+  //     router.push("/home");
+  //   }
+  // };
+
+
   return (
-    <View style={styles.container}>
-      <View style={{ gap: 10, alignItems: "center" }}>
-        <Image style={{ width: 100, height: 100 }} source={Logo} />
-        <Text
-          style={{
-            fontSize: 36,
-            color: "#ffffff",
-            fontWeight: "500",
-            fontFamily: "SpaceGroteskRegular",
-          }}
-        >
-          SnappiPay
-        </Text>
+    <ImageBackground
+    source={require('../assets/bg2.png')}
+    style={styles.container}
+    resizeMode="cover"
+    imageStyle={styles.image}
+    >
 
-        <Text
-          style={{
-            textAlign: "center",
-            fontSize: 14,
-            color: "#9CA3AF",
-            fontFamily: "SpaceGroteskRegular",
-          }}
-        >
-          Seamless crypto off-ramping
-        </Text>
-      </View>
-      <View style={{ alignItems: "center", gap: 10, marginTop: 40 }}>
-        <Text
-          style={{
-            fontSize: 24,
-            color: "#ffffff",
-            fontWeight: "500",
-            fontFamily: "SpaceGroteskRegular",
-          }}
-        >
-          Welcome
-        </Text>
-        <Text
-          style={{
-            color: "#9CA3AF",
-            fontSize: 14,
-            fontFamily: "SpaceGroteskRegular",
-            textAlign: "center",
-          }}
-        >
-          Connect your wallet or sign in with Google to {"\n"} continue
-        </Text>
-      </View>
-      <View style={{ gap: 14, marginTop: 40 }}>
-        <LinearGradient
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          colors={["#3B82F633", "#9333EA33"]}
-          style={{ borderRadius: 16, borderWidth: 1, borderColor: "#3B82F64D" }}
-        >
-          <Link href={"/home"} asChild>
-            <TouchableOpacity
-              // onPress={_handlePressButtonAsync}
-              style={{
-                padding: 20,
-                borderRadius: 16,
-                width: "100%",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <Image
-                    style={{ width: 32, height: 32 }}
-                    source={walletconnecticon}
-                  />
-                  <Text
-                    style={{
-                      color: "white",
-                      textAlign: "center",
-                      fontSize: 18,
-                      fontFamily: "SpaceGroteskRegular",
-                    }}
-                  >
-                    Connect with WalletConnect
-                  </Text>
-                </View>
-                <Image source={arrowicon} />
-              </View>
-            </TouchableOpacity>
-          </Link>
-        </LinearGradient>
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <Image source={orimg} />
-        </View>
-
-        <Link href={"/login"} asChild>
-          <TouchableOpacity
-            onPress={() => console.log("Tapped")}
-            style={{
-              padding: 20,
-              borderRadius: 16,
-              width: "100%",
-              backgroundColor: "#1F2937",
-              borderWidth: 1,
-              borderColor: "#4B5563",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                <Image style={{ width: 32, height: 32 }} source={googleicon} />
-                <Text
-                  style={{
-                    color: "white",
-                    textAlign: "center",
-                    fontSize: 18,
-                    fontFamily: "SpaceGroteskRegular",
-                  }}
-                >
-                  Continue with Google
-                </Text>
-              </View>
-              <Image source={arrowicon} />
+  <View  style={styles.page}>
+            {/* Image in the center */}
+            <View style={styles.imageContainer}>
+              {/* <Image
+                source={require('../assets/illus1.png')}
+                style={styles.pageImage}
+                resizeMode="contain"
+              /> */}
             </View>
-          </TouchableOpacity>
-        </Link>
-      </View>
+            
+            {/* Text content below image, above button */}
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>Welcome</Text>
+              <Text style={styles.description}>Connect your wallet or Sign In with your Google account to continue</Text>
 
-      <View
-        style={{
-          borderColor: "#10B98133",
-          borderWidth: 1,
-          backgroundColor: "#10B9811A",
-          padding: 20,
-          gap: 20,
-          borderRadius: 12,
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: 30,
-        }}
-      >
-        <Image source={greenshieldicon} />
-        <View style={{ gap: 4 }}>
-          <Text
-            style={{
-              color: "#10B981",
-              fontFamily: "SpaceGroteskRegular",
-              fontWeight: "500",
-            }}
-          >
-            Bank-Grade Security
-          </Text>
-          <Text
-            style={{
-              color: "#9CA3AF",
-              fontSize: 14,
-              fontFamily: "SpaceGroteskRegular",
-            }}
-          >
-            Your funds and data are protected with {"\n"}enterprise-level
-            encryption
-          </Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          marginTop: 30,
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
-          <Image style={{ width: 50, height: 50 }} source={instant} />
-          <Text
-            style={{
-              color: "#9CA3AF",
-              fontSize: 12,
-              fontFamily: "SpaceGroteskRegular",
-            }}
-          >
-            Instant
-          </Text>
-        </View>
+              <Link href={'#'} style={{ marginBottom: 30 }} >
+              <TouchableOpacity style={styles.Button1}>
+                  <Image
+                    style={styles.googleIcon}
+                    source={require('../assets/Google.png')}
+                  />
+                  <Text style={styles.Button1Text}>Continue with Google</Text>
+                </TouchableOpacity>
+              </Link>
 
-        <View style={{ alignItems: "center" }}>
-          <Image style={{ width: 50, height: 50 }} source={secure} />
-          <Text
-            style={{
-              color: "#9CA3AF",
-              fontSize: 12,
-              fontFamily: "SpaceGroteskRegular",
-            }}
-          >
-            Secure
-          </Text>
-        </View>
+              <Link href={'#'} style={{ marginBottom: 30 }} >
+              <TouchableOpacity style={styles.Button2}>
+                  <Image
+                    style={styles.walletIcon}
+                    source={require('../assets/walletConnect.png')}
+                  />
+                  <Text style={styles.Button2Text}>Connect with Wallet Connect</Text>
+                </TouchableOpacity>
+              </Link>
 
-        <View style={{ alignItems: "center" }}>
-          <Image style={{ width: 50, height: 50 }} source={lowfees} />
-          <Text
-            style={{
-              color: "#9CA3AF",
-              fontSize: 12,
-              fontFamily: "SpaceGroteskRegular",
-            }}
-          >
-            Instant
-          </Text>
-        </View>
-      </View>
+              <Link href={'/register'}>
+              <Text style={styles.description}>By continuing, you agree with our terms of service and Privacy Policy</Text>
+              </Link>
 
-      <View style={{ marginTop: 40 }}>
-        <Text
-          style={{
-            color: "#9CA3AF",
-            fontSize: 12,
-            fontFamily: "SpaceGroteskRegular",
-            textAlign: "center",
-          }}
-        >
-          By continuing, you agree to our Terms of Service and {"\n"} Privacy
-          Policy
-        </Text>
-        <View></View>
-      </View>
-    </View>
+
+           
+
+            </View>
+          </View>
+
+    </ImageBackground>
   );
 };
 
@@ -292,8 +94,110 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#111827",
-    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
+  image: {
+    opacity: 1,
+  },
+  page: {
+    width: width,
+    flex: 1,
+    paddingHorizontal: 20,
+    justifyContent: 'space-between', // Distribute space evenly
+  },
+  imageContainer: {
+   
+  },
+  pageImage: {
+    width: width * 0.7, // 70% of screen width
+    height: height * 0.7, // 35% of screen height
+    maxWidth: 500,
+    maxHeight: 500,
+ 
+  },
+  textContainer: {
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    paddingBottom: 20, // Space above indicators
+    paddingHorizontal: 10,
+    marginBottom: 100
+ 
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '600',
+    color: '#f9fafb',
+    textAlign: 'left',
+    marginBottom: 16,
+    fontFamily: 'Manrope',
+  },
+
+  description: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#f9fafb',
+    textAlign: 'left',
+    lineHeight: 24,
+    marginBottom: 40,
+    fontFamily: 'Manrope',
+  },
+
+  Button1: {
+    flexDirection: 'row',       // ← arrange icon & text side by side
+    alignItems: 'center',       // ← vertically center them
+    backgroundColor: '#0d0d0d',
+    paddingVertical: 18,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    justifyContent: 'flex-start', 
+    borderWidth: 1,
+    borderColor: '#6366f1',
+    shadowColor: '#0d0d0d',
+    width: '100%',
+
+  },
+  
+  Button1Text: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#fff',
+    fontFamily: 'Manrope',
+    marginLeft: 8,              // ← space between icon and text
+  },
+  
+  googleIcon: {
+    width: 20,
+    height: 20,
+  },
+
+  walletIcon: {
+    width: 20,
+    height: 20,
+  },
+
+  Button2: {
+    flexDirection: 'row',       // ← arrange icon & text side by side
+    alignItems: 'center',       // ← vertically center them
+    backgroundColor: '#0d0d0d',
+    paddingVertical: 18,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    justifyContent: 'flex-start', 
+    borderWidth: 1,
+    borderColor: '#1f2937',
+    shadowColor: '#0d0d0d',
+    width: '100%',
+
+  },
+  
+  Button2Text: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#fff',
+    fontFamily: 'Manrope',
+    marginLeft: 8,              // ← space between icon and text
+  },
+
+
 });
