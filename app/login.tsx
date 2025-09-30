@@ -75,7 +75,7 @@ const Login = () => {
               </View>
             </Link>
 
-              <Link href={'/register'}>
+              <Link href={'/paymentSuccessfulPage'}>
               <Text style={styles.description}>By continuing, you agree with our terms of service and Privacy Policy</Text>
               </Link>
 

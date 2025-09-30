@@ -16,6 +16,8 @@ const TouchableOpacityFixed = TouchableOpacity as any;
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import btclogo from "../../assets/img/btc.png";
+import ethLogo from "../../assets/eth.png";
+import usdtLogo from "../../assets/usdt.png";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
@@ -30,8 +32,8 @@ import { Ionicons } from "@expo/vector-icons";
 // Cryptocurrency options
 const cryptoOptions = [
   { id: 'btc', name: 'Bitcoin', symbol: 'BTC', price: 100000, logo: btclogo },
-  { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 4000, logo: btclogo },
-  { id: 'usdt', name: 'Tether', symbol: 'USDT', price: 1, logo: btclogo },
+  { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 4000, logo: ethLogo },
+  { id: 'usdt', name: 'Tether', symbol: 'USDT', price: 1, logo: usdtLogo },
 ];
 
 
@@ -114,37 +116,34 @@ const Pay = () => {
             />
           </View>
 
-        {/* Cryptocurrency Selection */}
-        <View style={styles.container}>
-          <Text
-            style={styles.label}
-          >
+       
+         {/* Cryptocurrency Selection */}
+         <View style={styles.container}>
+          <Text style={styles.label}>
             Select Asset
           </Text>
           <TouchableOpacityFixed
             onPress={() => setShowCryptoModal(true)}
             style={styles.textInput}
           >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
-            >
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
               <Image source={selectedCrypto.logo} style={{ width: 30, height: 30 }} />
               <View style={{ gap: 6 }}>
                 <Text
                   style={{
                     fontFamily: "Manrope",
-                    fontSize: 16,
+                    fontSize: 14,
                     color: "#ffffff",
                   }}
                 >
                   {selectedCrypto.name}
                 </Text>
-               
               </View>
             </View>
-            <Ionicons name="chevron-down" size={20} color="#fff" />
+            <Entypo name='chevron-down' size={24} color='#9CA3AF' />
           </TouchableOpacityFixed>
         </View>
+
 
         {/* Payment Amount */}
         <View style={styles.container}>
@@ -378,81 +377,114 @@ const Pay = () => {
 
 
       {/* Cryptocurrency Selection Modal */}
-      <Modal
+     <Modal
         visible={showCryptoModal}
         transparent={true}
-        animationType="fade"
+        animationType="slide"
         onRequestClose={() => setShowCryptoModal(false)}
       >
-        <TouchableOpacityFixed 
-          style={{
-            flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => setShowCryptoModal(false)}
-        >
+        <View style={{
+          flex: 1,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          justifyContent: 'flex-end',
+        }}>
           <View style={{
-            marginTop: 8,
-            backgroundColor: "#0d0d0d",
-            borderRadius: 8,
-            borderWidth: 1,
-            borderColor: "#374151",
-            width: "90%",
-            maxHeight: "60%",
+            backgroundColor: "#1F2937",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            maxHeight: "85%",
+            paddingBottom: 40,
           }}>
-            
-            <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: "#374151" }}>
+            {/* Modal Header */}
+            <View style={{ 
+              padding: 20, 
+              borderBottomWidth: 1, 
+              borderBottomColor: "#374151",
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
               <Text style={{
                 color: "#ffffff",
-                fontSize: 18,
-                fontFamily: "SpaceGroteskBold",
-                textAlign: "center"
+                fontSize: 20,
+                fontWeight: "600",
+                fontFamily: "Manrope",
               }}>
-                Select Cryptocurrency
+                Select Asset
               </Text>
+              <TouchableOpacityFixed onPress={() => setShowCryptoModal(false)}>
+                <FontAwesome name='times' size={24} color='#9CA3AF' />
+              </TouchableOpacityFixed>
             </View>
+
+            {/* Results count */}
+            <Text style={{
+              color: "#9CA3AF",
+              fontSize: 14,
+              paddingHorizontal: 20,
+              marginTop: 10,
+              fontFamily: "Manrope",
+            }}>
+              {cryptoOptions.length} asset{cryptoOptions.length !== 1 ? 's' : ''} available
+            </Text>
+
+            {/* Assets List */}
             <FlatList
               data={cryptoOptions}
               keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
+              showsVerticalScrollIndicator={false}
+              style={{ marginTop: 10 }}
+              renderItem={({ item, index }) => (
                 <TouchableOpacityFixed
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
-                    padding: 20,
-                    borderBottomWidth: 1,
+                    paddingHorizontal: 20,
+                    paddingVertical: 15,
+                    borderBottomWidth: index === cryptoOptions.length - 1 ? 0 : 1,
                     borderBottomColor: "#374151",
+                    backgroundColor: selectedCrypto.id === item.id ? "#374151" : "transparent",
                   }}
                   onPress={() => handleCryptoSelect(item)}
                 >
-                  <Image source={item.logo} style={{ width: 30, height: 30 }} />
-                  <View style={{ marginLeft: 12, flex: 1 }}>
+                  <View style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: "#374151",
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginRight: 12,
+                  }}>
+                    <Image source={item.logo} style={{ width: 24, height: 24 }} />
+                  </View>
+                  <View style={{ flex: 1 }}>
                     <Text style={{
-                      fontFamily: "SpaceGroteskRegular",
+                      fontFamily: "Manrope",
                       fontSize: 16,
                       color: "#ffffff",
                     }}>
                       {item.name}
                     </Text>
                     <Text style={{
-                      fontFamily: "SpaceGroteskRegular",
-                      fontSize: 14,
+                      fontFamily: "Manrope",
+                      fontSize: 12,
                       color: "#9CA3AF",
+                      marginTop: 2,
                     }}>
-                      {item.symbol} * ${item.price.toLocaleString()}
+                      {item.symbol} • ${item.price.toLocaleString()}
                     </Text>
                   </View>
                   {selectedCrypto.id === item.id && (
-                      <Ionicons name="chevron-down" size={20} color="#fff" />
+                    <FontAwesome name='check-circle' size={22} color='#755AE2' />
                   )}
                 </TouchableOpacityFixed>
               )}
             />
           </View>
-        </TouchableOpacityFixed>
+        </View>
       </Modal>
+
     </View>
   );
 };
