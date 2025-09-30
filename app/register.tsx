@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Link, router } from "expo-router";
 import { Picker } from '@react-native-picker/picker';
-import CustomDropdown from "../components/selectCountry";
+import SelectCountry from "../components/selectCountry";
 
 
 const { width, height } = Dimensions.get('window');
@@ -60,7 +60,7 @@ const Register = () => {
 
                 <View style={styles.field}>
             <Text style={styles.label}>Favorite Language</Text>
-            <CustomDropdown
+            <SelectCountry
               options={countryOptions}
               selectedValue={country}
               onSelect={setCountry}

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  StyleSheet
 } from "react-native";
 
 // Type fix for React 19 compatibility
@@ -18,6 +19,13 @@ import btclogo from "../../assets/img/btc.png";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link } from "expo-router";
+import BankSelect from "../../components/selectBank";
+import { Ionicons } from "@expo/vector-icons";
+
+
+
+
 
 // Cryptocurrency options
 const cryptoOptions = [
@@ -25,6 +33,8 @@ const cryptoOptions = [
   { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 4000, logo: btclogo },
   { id: 'usdt', name: 'Tether', symbol: 'USDT', price: 1, logo: btclogo },
 ];
+
+
 
 const Pay = () => {
   const [selectedCrypto, setSelectedCrypto] = useState(cryptoOptions[0]);
@@ -39,238 +49,140 @@ const Pay = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#111827" }}>
-      <ScrollView
-        style={{
-          flex: 1,
-          paddingTop: 70,
-          paddingHorizontal: 20,
-        }}
-        contentContainerStyle={{ paddingBottom: 20 }}
-      >
-        {/* Header */}
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacityFixed>
-            <AntDesign name='arrow-left' size={24} color='#9CA3AF' />
-          </TouchableOpacityFixed>
-          <Text
+    <View style={{ flex: 1, backgroundColor: "#020202" }}>
+       {/* Header */}
+       <View
             style={{
-              fontSize: 18,
-              color: "#ffffff",
-              fontFamily: "SpaceGroteskRegular",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between", 
+                paddingTop: 80,
+                paddingHorizontal: 20,
+                marginBottom:20
             }}
-          >
-            Pay Vendor
-          </Text>
-          <TouchableOpacityFixed>
-            <MaterialIcons name='more-vert' size={24} color='#9CA3AF' />
-          </TouchableOpacityFixed>
-        </View>
+            >
+            {/* Left: Back Arrow */}
+            <Link href="/home" asChild>
+                <TouchableOpacity>
+               
+                <Image source={require('../../assets/back-arrow.png')} style={{height:30, width:30}}/>
+                </TouchableOpacity>
+            </Link>
+
+            {/* Center: Title */}
+            <Text
+                style={{
+                  fontSize: 18,
+                  lineHeight:32,
+                  fontWeight: "600",
+                  color: "#ffffff",
+                  fontFamily: "Manrope",
+                }}
+            >
+                Make Payment
+            </Text>
+
+           
+            <View style={{ width: 24 }} />
+            </View>
+              <ScrollView
+                style={{
+                  flex: 1,
+                  paddingHorizontal: 20,
+                }}
+                contentContainerStyle={{ paddingBottom: 20 }}
+              >
+
+        
+            <BankSelect
+              label="Select Bank"
+              onSelect={(bank) => {
+                console.log("Selected bank:", bank.name, bank.code);
+              }}
+            />
+
+
+         {/* Account Number Input */}
+
+        <View style={styles.container}>
+          <Text style={styles.label}>Account Number</Text>
+            <TextInput
+              value={accountNumber}
+              onChangeText={setAccountNumber}
+              keyboardType="numeric"
+              style={styles.textInput}
+            />
+          </View>
 
         {/* Cryptocurrency Selection */}
-        <View style={{ marginTop: 40 }}>
+        <View style={styles.container}>
           <Text
-            style={{
-              color: "#D1D5DB",
-              fontFamily: "SpaceGroteskRegular",
-              fontSize: 16,
-            }}
+            style={styles.label}
           >
-            Select Cryptocurrency
+            Select Asset
           </Text>
           <TouchableOpacityFixed
             onPress={() => setShowCryptoModal(true)}
-            style={{
-              borderWidth: 1,
-              borderColor: "#374151",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 20,
-              backgroundColor: "#2D2E36",
-              borderRadius: 12,
-              marginTop: 20,
-            }}
+            style={styles.textInput}
           >
             <View
               style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
             >
-              <Image source={selectedCrypto.logo} style={{ width: 40, height: 40 }} />
+              <Image source={selectedCrypto.logo} style={{ width: 30, height: 30 }} />
               <View style={{ gap: 6 }}>
                 <Text
                   style={{
-                    fontFamily: "SpaceGroteskRegular",
+                    fontFamily: "Manrope",
                     fontSize: 16,
                     color: "#ffffff",
                   }}
                 >
                   {selectedCrypto.name}
                 </Text>
-                <Text
-                  style={{
-                    fontFamily: "SpaceGroteskRegular",
-                    fontSize: 16,
-                    color: "#9CA3AF",
-                  }}
-                >
-                  {selectedCrypto.symbol} * ${selectedCrypto.price.toLocaleString()}
-                </Text>
+               
               </View>
             </View>
-            <Entypo name='chevron-down' size={24} color='#9CA3AF' />
+            <Ionicons name="chevron-down" size={20} color="#fff" />
           </TouchableOpacityFixed>
         </View>
 
-        {/* Vendor Details */}
-        <View style={{ marginTop: 35, marginBottom: 35 }}>
-          <Text
-            style={{
-              fontFamily: "SpaceGroteskRegular",
-              color: "white",
-              fontSize: 18,
-            }}
-          >
-            Vendor Details
-          </Text>
-        </View>
-
-        {/* Bank Name Input */}
-        <View>
-          <Text
-            style={{
-              color: "#D1D5DB",
-              fontFamily: "SpaceGroteskRegular",
-              fontSize: 16,
-            }}
-          >
-            Bank Name
-          </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#374151",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 20,
-              backgroundColor: "#2D2E36",
-              borderRadius: 12,
-              marginTop: 14,
-            }}
-          >
-            <TextInput
-              value={bankName}
-              onChangeText={setBankName}
-              placeholder="Enter bank name"
-              placeholderTextColor="#9CA3AF"
-              style={{
-                fontFamily: "SpaceGroteskRegular",
-                fontSize: 16,
-                color: "#ffffff",
-                flex: 1,
-              }}
-            />
-            <FontAwesome name='bank' size={20} color='#9CA3AF' />
-          </View>
-        </View>
-
-        {/* Account Number Input */}
-        <View style={{ marginTop: 20 }}>
-          <Text
-            style={{
-              color: "#D1D5DB",
-              fontFamily: "SpaceGroteskRegular",
-              fontSize: 16,
-            }}
-          >
-            Account Number
-          </Text>
-          <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#374151",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: 20,
-              backgroundColor: "#2D2E36",
-              borderRadius: 12,
-              marginTop: 14,
-            }}
-          >
-            <TextInput
-              value={accountNumber}
-              onChangeText={setAccountNumber}
-              placeholder="Enter account number"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="numeric"
-              style={{
-                fontFamily: "SpaceGroteskRegular",
-                fontSize: 16,
-                color: "#ffffff",
-                flex: 1,
-              }}
-            />
-            <FontAwesome name='credit-card' size={24} color='#9CA3AF' />
-          </View>
-        </View>
-
         {/* Payment Amount */}
-        <View style={{ marginTop: 20 }}>
-          <Text
-            style={{
-              color: "#D1D5DB",
-              fontFamily: "SpaceGroteskRegular",
-              fontSize: 16,
-            }}
-          >
-            Payment Amount
-          </Text>
+        <View style={styles.container}>
           <View
-            style={{
-              borderWidth: 1,
-              borderColor: "#374151",
-              padding: 20,
-              backgroundColor: "#2D2E36",
-              borderRadius: 12,
-              marginTop: 14,
-            }}
+          style={{flexDirection: "row", 
+            justifyContent: "space-between", 
+            alignItems: "center",}}>
+               <Text
+            style={styles.label}
           >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
+             Amount
+          </Text>
+          <Text
+          style={styles.label}
+          >Bal: 0.00</Text>
+          </View>
+         
+          <View
+          style={{
+            backgroundColor: "#0d0d0d",
+            borderRadius: 8,
+            paddingHorizontal: 10,
+            paddingVertical: 18,
+            borderWidth: 1,
+            borderColor: '#374151',
+            width: "100%",
+          }}
+          >
+            <View>
               <TextInput
                 value={amount}
                 onChangeText={setAmount}
                 placeholderTextColor={"#ADAEBC"}
-                style={{
-                  fontSize: 24,
-                  fontFamily: "SpaceGroteskRegular",
-                  color: "#ffffff",
-                  flex: 1,
-                }}
+               style={{color: "#fff", fontFamily: "Manrope"}}
                 placeholder='0.00'
                 keyboardType="numeric"
               />
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: "SpaceGroteskBold",
-                  color: "#D1D5DB",
-                }}
-              >
-                NGN
-              </Text>
+            
             </View>
 
             <View
@@ -284,7 +196,7 @@ const Pay = () => {
               <Text
                 style={{
                   fontSize: 14,
-                  fontFamily: "SpaceGroteskRegular",
+                  fontFamily: "Manrope",
                   color: "#9CA3AF",
                 }}
               >
@@ -293,30 +205,38 @@ const Pay = () => {
               <Text
                 style={{
                   fontSize: 14,
-                  fontFamily: "SpaceGroteskRegular",
+                  fontFamily: "Manrope",
                   color: "#9CA3AF",
                 }}
               >
                 Fee: NGN10.0
               </Text>
             </View>
+
           </View>
         </View>
+
+        
 
         {/* Transaction Summary */}
         <View
           style={{
-            marginTop: 20,
-            padding: 20,
-            backgroundColor: "#2D2E36",
-            borderRadius: 12,
+            margin:10,
+            paddingHorizontal: 10,
+            paddingVertical: 18,
+            backgroundColor: "#0d0d0d",
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: '#374151',
           }}
         >
           <Text
             style={{
-              color: "#D1D5DB",
-              fontFamily: "SpaceGroteskRegular",
-              fontSize: 16,
+              color: "#f9fafB",
+              fontFamily: "Manrope",
+              fontSize: 14,
+              lineHeight:24,
+              fontWeight: 400,
             }}
           >
             Transaction Summary
@@ -330,14 +250,17 @@ const Pay = () => {
             >
               <Text
                 style={{
-                  color: "#9CA3AF",
-                  fontFamily: "SpaceGroteskRegular",
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
                 }}
               >
                 Amount
               </Text>
               <Text
-                style={{ color: "#FFFFFF", fontFamily: "SpaceGroteskBold" }}
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
               >
                 ₦{amount || '0.00'}
               </Text>
@@ -351,14 +274,17 @@ const Pay = () => {
             >
               <Text
                 style={{
-                  color: "#9CA3AF",
-                  fontFamily: "SpaceGroteskRegular",
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
                 }}
               >
                 Network Fee
               </Text>
               <Text
-                style={{ color: "#FFFFFF", fontFamily: "SpaceGroteskBold" }}
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
               >
                 ₦2.50
               </Text>
@@ -371,14 +297,17 @@ const Pay = () => {
             >
               <Text
                 style={{
-                  color: "#9CA3AF",
-                  fontFamily: "SpaceGroteskRegular",
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
                 }}
               >
                 Processing Fee
               </Text>
               <Text
-                style={{ color: "#FFFFFF", fontFamily: "SpaceGroteskBold" }}
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
               >
                 ₦1.25
               </Text>
@@ -398,12 +327,16 @@ const Pay = () => {
               }}
             >
               <Text
-                style={{ color: "#FFFFFF", fontFamily: "SpaceGroteskBold" }}
+                style={{  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400, }}
               >
                 Total
               </Text>
               <Text
-                style={{ color: "#FFFFFF", fontFamily: "SpaceGroteskBold" }}
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
               >
                 ₦{amount ? (parseFloat(amount) + 3.75).toFixed(2) : '3.75'}
               </Text>
@@ -412,56 +345,37 @@ const Pay = () => {
         </View>
 
         {/* Send Payment Button */}
-        <View style={{ marginTop: 20, paddingBottom: 20 }}>
-          <LinearGradient
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            colors={["#0066FF", "#7C3AED"]}
-            style={{
-              borderRadius: 16,
-              borderWidth: 1,
-              borderColor: "#3B82F64D",
-            }}
-          >
+        <View style={{ margin: 10, paddingBottom: 20 }}>
             <TouchableOpacityFixed
               onPress={() => console.log("Payment sent!", { bankName, accountNumber, amount, selectedCrypto })}
               style={{
-                padding: 20,
-                borderRadius: 16,
-                width: "100%",
+                backgroundColor: '#755ae2',
+                paddingVertical: 18,
+                paddingHorizontal: 32,
+                borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                shadowColor: '#ffffff',
+               
               }}
             >
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 10,
-                  }}
-                >
-                  <FontAwesome name='send-o' size={24} color='white' />
                   <Text
                     style={{
                       color: "white",
                       textAlign: "center",
-                      fontSize: 18,
-                      fontFamily: "SpaceGroteskBold",
+                      fontSize: 14,
+                      fontFamily: "Manrope",
+                      fontWeight:600,
+                      lineHeight: 24,
                     }}
                   >
                     Send Payment
                   </Text>
-                </View>
-              </View>
             </TouchableOpacityFixed>
-          </LinearGradient>
         </View>
       </ScrollView>
+
+
 
       {/* Cryptocurrency Selection Modal */}
       <Modal
@@ -480,13 +394,15 @@ const Pay = () => {
           onPress={() => setShowCryptoModal(false)}
         >
           <View style={{
-            backgroundColor: "#1F2937",
-            borderRadius: 12,
+            marginTop: 8,
+            backgroundColor: "#0d0d0d",
+            borderRadius: 8,
             borderWidth: 1,
             borderColor: "#374151",
             width: "90%",
             maxHeight: "60%",
           }}>
+            
             <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: "#374151" }}>
               <Text style={{
                 color: "#ffffff",
@@ -511,7 +427,7 @@ const Pay = () => {
                   }}
                   onPress={() => handleCryptoSelect(item)}
                 >
-                  <Image source={item.logo} style={{ width: 40, height: 40 }} />
+                  <Image source={item.logo} style={{ width: 30, height: 30 }} />
                   <View style={{ marginLeft: 12, flex: 1 }}>
                     <Text style={{
                       fontFamily: "SpaceGroteskRegular",
@@ -529,7 +445,7 @@ const Pay = () => {
                     </Text>
                   </View>
                   {selectedCrypto.id === item.id && (
-                    <FontAwesome name='check' size={20} color='#0066FF' />
+                      <Ionicons name="chevron-down" size={20} color="#fff" />
                   )}
                 </TouchableOpacityFixed>
               )}
@@ -542,3 +458,28 @@ const Pay = () => {
 };
 
 export default Pay;
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 10,
+  },
+  label: {
+    fontSize: 14,
+    color: "#f9fafb",
+    marginBottom: 6,
+  },
+  textInput: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#0d0d0d",
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 18,
+    borderWidth: 1,
+    borderColor: '#374151',
+    color:"#fff",
+    width: "100%",
+  },
+
+})

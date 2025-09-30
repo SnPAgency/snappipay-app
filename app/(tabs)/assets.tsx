@@ -45,8 +45,10 @@ const Assets = () => {
             <Text
                 style={{
                 fontSize: 18,
+                lineHeight:32,
+                fontWeight: "600",
                 color: "#ffffff",
-                fontFamily: "SpaceGroteskRegular",
+                fontFamily: "Manrope",
                 }}
             >
                 Assets
@@ -58,7 +60,6 @@ const Assets = () => {
       <ScrollView
         style={{
           flex: 1,
-         
           paddingHorizontal: 20,
         }}
         contentContainerStyle={{ paddingBottom: 20 }}
