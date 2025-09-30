@@ -26,7 +26,7 @@ const Receive = () => {
         }}
       >
         <View>
-          <AntDesign name='arrowleft' size={24} color='#9CA3AF' />
+          <AntDesign name='arrow-left' size={24} color='#9CA3AF' />
         </View>
         <Text
           style={{
