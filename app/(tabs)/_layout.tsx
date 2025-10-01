@@ -22,7 +22,8 @@ export default function TabLayout() {
             <TabIcon
               label="Home"
               focused={focused}
-              image={require("../../assets/home.png")}
+              activeImage={require("../../assets/home1.png")}
+              inactiveImage={require("../../assets/home.png")}
             />
           ),
         }}
@@ -36,7 +37,8 @@ export default function TabLayout() {
             <TabIcon
               label="Pay"
               focused={focused}
-              image={require("../../assets/payments.png")}
+              activeImage={require("../../assets/payments1.png")}
+              inactiveImage={require("../../assets/payments.png")}
             />
           ),
         }}
@@ -50,7 +52,8 @@ export default function TabLayout() {
             <TabIcon
               label="Assets"
               focused={focused}
-              image={require("../../assets/assets.png")}
+              activeImage={require("../../assets/assets1.png")}
+              inactiveImage={require("../../assets/assets.png")}
             />
           ),
         }}
@@ -64,13 +67,12 @@ export default function TabLayout() {
             <TabIcon
               label="Profile"
               focused={focused}
-              image={require("../../assets/profile-circle.png")}
+              activeImage={require("../../assets/profile-circle1.png")}
+              inactiveImage={require("../../assets/profile-circle.png")}
             />
           ),
         }}
       />
-
-      
     </Tabs>
   );
 }
@@ -79,19 +81,20 @@ export default function TabLayout() {
 const TabIcon = ({
   label,
   focused,
-  image,
+  activeImage,
+  inactiveImage,
 }: {
   label: string;
   focused: boolean;
-  image: any;
+  activeImage: any;
+  inactiveImage: any;
 }) => (
-  <View
-    style={[
-      styles.iconContainer,
-      focused ? styles.activeBackground : styles.inactiveBackground,
-    ]}
-  >
-    <Image source={image} style={styles.icon} resizeMode="contain" />
+  <View style={styles.iconContainer}>
+    <Image
+      source={focused ? activeImage : inactiveImage}
+      style={styles.icon}
+      resizeMode="contain"
+    />
     <Text style={[styles.label, focused ? styles.activeText : styles.inactiveText]}>
       {label}
     </Text>
@@ -102,26 +105,18 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
-    padding: 0,
+    width: 60,
     marginTop: 4,
   },
-  activeBackground: {
-   
-  },
-  inactiveBackground: {
-   
-  },
   icon: {
-    width: 24,
-    height: 24,
+    width: 26,
+    height: 26,
     marginBottom: 2,
   },
   label: {
     fontSize: 10,
     fontFamily: "Manrope",
     textAlign: "center",
-    flexShrink: 0,
   },
   activeText: {
     color: "#ffffff",

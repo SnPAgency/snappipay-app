@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#020202',
+    margin:0,
   },
   logoContainer: {
     alignItems: 'center',
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
   page: {
     width: width,
     flex: 1,
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     justifyContent: 'space-between', // Distribute space evenly
   },
   imageContainer: {
@@ -174,18 +175,17 @@ const styles = StyleSheet.create({
 
   },
   pageImage: {
-    width: width * 0.7, // 70% of screen width
-    height: height * 0.5, // 35% of screen height
-    maxWidth: 500,
-    maxHeight: 500,
-    borderRadius: 1000
- 
+    width: "100%",      // take full width of the screen
+    height: height,     // full height of the screen (or set a fixed number)
+    resizeMode: "cover" // makes the image fill width while cropping if necessary
   },
+  
+  
   textContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 20, // Space above indicators
-    paddingHorizontal: 10,
+    paddingHorizontal: 40,
   },
   title: {
     fontSize: 22,
