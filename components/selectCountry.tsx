@@ -18,7 +18,7 @@ interface CustomDropdownProps {
 }
 
 // Custom Dropdown Component
-const CustomDropdown = ({ options, selectedValue, onSelect, placeholder, style }: CustomDropdownProps) => {
+const SelectCountry = ({ options, selectedValue, onSelect, placeholder, style }: CustomDropdownProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
@@ -164,7 +164,7 @@ const CustomDropdown = ({ options, selectedValue, onSelect, placeholder, style }
   );
 };
 
-export default CustomDropdown;
+export default SelectCountry;
 
 
 const styles = StyleSheet.create({

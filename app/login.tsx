@@ -56,26 +56,26 @@ const Login = () => {
               <Text style={styles.description}>Connect your wallet or Sign In with your Google account to continue</Text>
 
               <Link href={'#'} style={{ marginBottom: 30 }} >
-              <TouchableOpacity style={styles.Button1}>
+              <View style={styles.Button1}>
                   <Image
                     style={styles.googleIcon}
                     source={require('../assets/Google.png')}
                   />
                   <Text style={styles.Button1Text}>Continue with Google</Text>
-                </TouchableOpacity>
+                </View>
               </Link>
 
-              <Link href={'#'} style={{ marginBottom: 30 }} >
-              <TouchableOpacity style={styles.Button2}>
-                  <Image
-                    style={styles.walletIcon}
-                    source={require('../assets/walletConnect.png')}
-                  />
-                  <Text style={styles.Button2Text}>Connect with Wallet Connect</Text>
-                </TouchableOpacity>
-              </Link>
+              <Link href={'#'} style={{ marginBottom: 30 }}>
+              <View style={styles.Button2}>
+                <Image
+                  style={styles.walletIcon}
+                  source={require('../assets/walletConnect.png')}
+                />
+                <Text style={styles.Button2Text}>Connect with Wallet Connect</Text>
+              </View>
+            </Link>
 
-              <Link href={'/register'}>
+              <Link href={'/paymentSuccessfulPage'}>
               <Text style={styles.description}>By continuing, you agree with our terms of service and Privacy Policy</Text>
               </Link>
 

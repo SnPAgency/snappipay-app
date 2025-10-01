@@ -6,6 +6,8 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
+  Pressable
 } from "react-native";
 import React, { useState } from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -19,7 +21,9 @@ import ethlogo from "../../assets/img/eth.png";
 import tetherlogo from "../../assets/img/tether.png";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link } from "expo-router";
+import TransactionRow from "../../components/TxnRow";
 
+const { width, height } = Dimensions.get('window');
 const Home = () => {
   const [open, setOpen] = useState(false);
   const [selectedCrypto, setSelectedCrypto] = useState("Bitcoin");
@@ -34,42 +38,45 @@ const Home = () => {
     <ScrollView
       style={{
         flex: 1,
-        backgroundColor: "#111827",
-        paddingTop: 70,
-        // justifyContent: "flex-start",
+        backgroundColor: "#020202",
+        paddingTop: 80,
         paddingHorizontal: 20,
       }}
       contentContainerStyle={{ paddingBottom: 20 }}
     >
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between", marginHorizontal:10, }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
           <Image
             source={profile}
             style={{ borderRadius: "50%", width: 40, height: 40 }}
           />
-          <Text
-            style={{
-              fontSize: 18,
-              color: "#ffffff",
-              fontFamily: "SpaceGroteskRegular",
-            }}
-          >
-            Hi, GODSWILL
-          </Text>
+          <View style={{ flexDirection: "column" }}>
+            <Text style={styles.helloText}>
+              Good morning 👋🏽
+            </Text>
+            <Text style={styles.nameText}>
+              Femi
+            </Text>
+          </View>
         </View>
-        <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
-          <MaterialIcons name='notifications' size={24} color='#3B82F6' />
-          <AntDesign name='customerservice' size={24} color='#3B82F6' />
+
+        <Link href={'#'}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Image style={{height: 40, width: 40}} source={require('../../assets/noti-icon.png')}/>
+         
         </View>
+        </Link>
+       
       </View>
       <View style={{ marginTop: 20 }}>
         <View>
           <LinearGradient
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            colors={["#0066FF", "#7C3AED"]}
+            colors={['#755AE2', '#40317C', '#40317C']}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            locations={[0, 0.6, 1]}
             style={{
-              borderRadius: 16,
+              borderRadius: 8,
               borderWidth: 1,
               borderColor: "#3B82F64D",
               padding: 20,
@@ -78,9 +85,9 @@ const Home = () => {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "space-between",
                 alignItems: "center",
                 marginBottom: 10,
+                gap: 12,
               }}
             >
               <Text
@@ -92,468 +99,190 @@ const Home = () => {
               >
                 Available Balance
               </Text>
-
-              <AntDesign name='eye' size={24} color='#FFFFFF' />
+    
+                <Image source={require('../../assets/open-eye-icon.png')} style={{height: 20, width: 20}}/>
             </View>
 
             <View style={{ gap: 10 }}>
               <Text
                 style={{
-                  fontSize: 36,
+                  fontSize: 28,
+                  lineHeight:36,
                   color: "#FFFFFF",
-                  fontFamily: "SpaceGroteskRegular",
-                  fontWeight: "800",
+                  fontFamily: "Geist",
+                  fontWeight: "600",
                 }}
               >
-                $1,234.56
+                <Text
+                style={{fontSize: 14, fontFamily: "Geist", fontWeight: "400"}}
+                >$</Text>1,234.56
               </Text>
-              <Text style={{ color: "#FFFFFF", fontSize: 14 }}>
-                0.025 BTC ≈ $1,234.56
-              </Text>
+            
             </View>
+
+
+
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, gap: 10 }}>
+            <Link href={"#"} asChild>
+              <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
+                <View
+                  style={{
+                    borderRadius: 25,
+                    paddingVertical: 14,
+                    paddingHorizontal: 25,
+                    backgroundColor: "#927de8",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                    width: "100%", // Make button fill container width
+                  }}
+                >
+                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Send</Text>
+                  <Image source={require('../../assets/send-arrow.png')} style={{width: 17, height: 17}}/>
+                </View>
+              </TouchableOpacity>
+            </Link>
+            
+            <Link href={"#"} asChild>
+              <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
+                <View
+                  style={{
+                    borderRadius: 25,
+                    paddingVertical: 14,
+                    paddingHorizontal: 25,
+                    backgroundColor: "#927de8",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                    width: "100%",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Receive</Text>
+                  <Image source={require('../../assets/receive-arrow.png')} style={{width: 17, height: 17}}/>
+                </View>
+              </TouchableOpacity>
+            </Link>
+            
+            <Link href={"#"} asChild>
+              <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
+                <View
+                  style={{
+                    borderRadius: 25,
+                    paddingVertical: 14,
+                    paddingHorizontal: 25,
+                    backgroundColor: "#927de8",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                    width: "100%",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Pay</Text>
+                  <Image source={require('../../assets/pay-icon.png')} style={{width: 17, height: 17}}/>
+                </View>
+              </TouchableOpacity>
+            </Link>
+          </View>
           </LinearGradient>
         </View>
       </View>
 
-      <View
-        style={{
-          padding: 20,
-          backgroundColor: "#1F2937",
-          borderRadius: 16,
-          marginTop: 20,
+    
+
+      <View style={{ marginTop: 20,
+      backgroundColor: '#0f0c1d',
+      paddingHorizontal: 15,
+      paddingVertical: 15,
+      borderRadius: 4,
+
+      }}>
+       <View style={{ 
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        alignItems: "center",
+        marginBottom: 20,
+      }}>
+        <Text
+          style={{
+            color: "#ffffff",
+            fontSize: 16,
+            fontFamily: "Trap",
+            fontWeight: "600",
+            lineHeight: 24
+          }}
+        >
+          Recent
+        </Text>
+        <Link href={'#'}>
+          <Text style={{ color: "#927de8",
+            fontFamily: "Trap",
+            fontSize: 12,
+            lineHeight: 24,
+            fontWeight: 600,
+           }}>View all</Text>
+        </Link>
+      </View>
+
+      <View style={{marginBottom: 20,}}>
+        <Text
+         style={{
+          color: "#FFFFFFB2",
+
+          fontSize: 14,
+          fontFamily: "Trap",
+          fontWeight: "600",
+          lineHeight: 24
         }}
-      >
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-          <Link href={"/pay"} asChild>
-            <TouchableOpacity>
-              <View style={{ alignItems: "center", gap: 4 }}>
-                <View
-                  style={{
-                    borderRadius: "50%",
-                    paddingVertical: 14,
-                    paddingHorizontal: 14,
-                    backgroundColor: "#7C3AED",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AntDesign name='arrowup' size={24} color='white' />
-                </View>
-                <Text style={{ fontSize: 14, color: "#FFFFFF" }}>Send</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-          <Link href={"/receive"} asChild>
-            <TouchableOpacity>
-              <View style={{ alignItems: "center", gap: 4 }}>
-                <View
-                  style={{
-                    borderRadius: "50%",
-                    paddingVertical: 14,
-                    paddingHorizontal: 14,
-                    backgroundColor: "#7C3AED",
-                    justifyContent: "center",
-                  }}
-                >
-                  <AntDesign name='arrowdown' size={24} color='white' />
-                </View>
-                <Text style={{ fontSize: 14, color: "#FFFFFF" }}>Receive</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-
-          <Link href={"/play"} asChild>
-            <TouchableOpacity>
-              <View style={{ alignItems: "center", gap: 4 }}>
-                <View
-                  style={{
-                    borderRadius: "50%",
-                    paddingVertical: 14,
-                    paddingHorizontal: 14,
-                    backgroundColor: "#7C3AED",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Ionicons
-                    style={{ marginLeft: 2 }}
-                    name='play-outline'
-                    size={24}
-                    color='white'
-                  />
-                </View>
-                <Text style={{ fontSize: 14, color: "#FFFFFF" }}>Play</Text>
-              </View>
-            </TouchableOpacity>
-          </Link>
-
-          <View style={{ alignItems: "center", gap: 4 }}>
-            <View
-              style={{
-                borderRadius: "50%",
-                paddingVertical: 14,
-                paddingHorizontal: 14,
-                backgroundColor: "#7C3AED",
-                justifyContent: "center",
-              }}
-            >
-              <MaterialIcons name='more-horiz' size={24} color='white' />
-            </View>
-            <Text style={{ fontSize: 14, color: "#FFFFFF" }}>More</Text>
-          </View>
-        </View>
+        >Today</Text>
       </View>
-      <View style={{ marginTop: 20 }}>
-        <Text
-          style={{
-            color: "#ffffff",
-            fontSize: 20,
-            marginBottom: 20,
-            fontFamily: "SpaceGroteskRegular",
-          }}
-        >
-          Recent Activity
-        </Text>
 
-        <View style={{ gap: 12 }}>
-          <View
-            style={{
-              borderRadius: 10,
-              padding: 20,
-              backgroundColor: "#1F2937",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ gap: 6 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: "#FFFFFF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  Sent $50 to Vendor X
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#9CA3AF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  2 hours ago
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: "#F87171",
-                  fontFamily: "InterBold",
-                }}
-              >
-                -$50.00
-              </Text>
-            </View>
-          </View>
+      <ScrollView>
+      <TransactionRow
+      type="receive"
+      title="USDC Deposit"
+      subtitle="Payment received"
+      amount="+700.00"
+      time="12:12"
+      receiveImage={require('../../assets/received-arrow.png')}
+      sentImage={require('../../assets/sent-arrow.png')}
+      payImage={require('../../assets/payment-arrow.png')}
+        />
 
-          <View
-            style={{
-              borderRadius: 10,
-              padding: 20,
-              backgroundColor: "#1F2937",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ gap: 6 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: "#FFFFFF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  Received from DeFi Swap
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#9CA3AF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  1 day ago
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: "#22C55E",
-                  fontFamily: "InterBold",
-                }}
-              >
-                +$50.00
-              </Text>
-            </View>
-          </View>
+        <TransactionRow
+          type="sent"
+          title="USDC Sent"
+          subtitle="Payment sent"
+          amount="-250.00"
+          time="13:45"
+          receiveImage={require('../../assets/received-arrow.png')}
+          sentImage={require('../../assets/sent-arrow.png')}
+          payImage={require('../../assets/payment-arrow.png')}
+        />
 
-          <View
-            style={{
-              borderRadius: 10,
-              padding: 20,
-              backgroundColor: "#1F2937",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ gap: 6 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: "#FFFFFF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  Sent $50 to Vendor X
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: "#9CA3AF",
-                    fontFamily: "InterRegular",
-                  }}
-                >
-                  2 hours ago
-                </Text>
-              </View>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: "#F87171",
-                  fontFamily: "InterBold",
-                }}
-              >
-                -$50.00
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Text
-          style={{
-            color: "#ffffff",
-            fontSize: 20,
-            marginBottom: 20,
-            fontFamily: "SpaceGroteskRegular",
-          }}
-        >
-          Top Crypto Holdings
-        </Text>
+        <TransactionRow
+          type="pay"
+          title="Request from Ard..."
+          subtitle="Payment received"
+          amount="-50.00"
+          time="15:20"
+          receiveImage={require('../../assets/received-arrow.png')}
+          sentImage={require('../../assets/sent-arrow.png')}
+          payImage={require('../../assets/payment-arrow.png')}
+        />
 
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <View
-            style={{
-              borderRadius: 10,
-              padding: 20,
-              backgroundColor: "#1F2937",
-              justifyContent: "center",
-              width: 175,
-              boxShadow: "0px 0px 20px 0px #9333EA4D",
-              borderWidth: 1,
-              borderColor: "#F973164D",
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <Image source={btclogo} style={{ width: 32, height: 32 }} />
-              <Text
-                style={{
-                  color: "#ffffff",
-                  fontSize: 16,
-                  fontFamily: "InterRegular",
-                }}
-              >
-                BTC
-              </Text>
-            </View>
-            <View style={{ marginTop: 14, gap: 4 }}>
-              <View
-                style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "SpaceGroteskRegular",
-                    fontSize: 18,
-                    color: "#ffffff",
-                  }}
-                >
-                  $1,234.56
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "InterRegular",
-                    color: "#F87171",
-                  }}
-                >
-                  -4.2%
-                </Text>
-              </View>
+    </ScrollView>
 
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontFamily: "InterRegular",
-                  color: "#9CA3AF",
-                }}
-              >
-                0.025 BTC
-              </Text>
-            </View>
-          </View>
 
-          <View
-            style={{
-              borderRadius: 10,
-              padding: 20,
-              backgroundColor: "#1F2937",
-              justifyContent: "center",
-              width: 175,
-              boxShadow: "0px 0px 20px 0px #06B6D44D",
-              borderWidth: 1,
-              borderColor: "#3B82F64D",
-            }}
-          >
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-            >
-              <Image source={ethlogo} style={{ width: 32, height: 32 }} />
-              <Text
-                style={{
-                  color: "#ffffff",
-                  fontSize: 16,
-                  fontFamily: "InterRegular",
-                }}
-              >
-                ETH
-              </Text>
-            </View>
-            <View style={{ marginTop: 14, gap: 4 }}>
-              <View
-                style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
-              >
-                <Text
-                  style={{
-                    fontFamily: "SpaceGroteskRegular",
-                    fontSize: 18,
-                    color: "#ffffff",
-                  }}
-                >
-                  $834.06
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: "InterRegular",
-                    color: "#4ADE80",
-                  }}
-                >
-                  +1.2%
-                </Text>
-              </View>
 
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontFamily: "InterRegular",
-                  color: "#9CA3AF",
-                }}
-              >
-                0.45 ETH
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            marginTop: 20,
-            borderRadius: 10,
-            padding: 20,
-            backgroundColor: "#1F2937",
-            justifyContent: "center",
-            width: 175,
-            boxShadow: "0px 0px 20px 0px #06B6D44D",
-            borderWidth: 1,
-            borderColor: "#3B82F64D",
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-            <Image source={tetherlogo} style={{ width: 32, height: 32 }} />
-            <Text
-              style={{
-                color: "#ffffff",
-                fontSize: 16,
-                fontFamily: "InterRegular",
-              }}
-            >
-              USDT
-            </Text>
-          </View>
-          <View style={{ marginTop: 14, gap: 4 }}>
-            <View
-              style={{ flexDirection: "row", gap: 4, alignItems: "center" }}
-            >
-              <Text
-                style={{
-                  fontFamily: "SpaceGroteskRegular",
-                  fontSize: 18,
-                  color: "#ffffff",
-                }}
-              >
-                $834.06
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontFamily: "InterRegular",
-                  color: "#4ADE80",
-                }}
-              >
-                +1.2%
-              </Text>
-            </View>
+      
+      
 
-            <Text
-              style={{
-                fontSize: 12,
-                fontFamily: "InterRegular",
-                color: "#9CA3AF",
-              }}
-            >
-              834 USDT
-            </Text>
-          </View>
-        </View>
+          
+
+
       </View>
     </ScrollView>
   );
@@ -567,7 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#020202",
   },
   dropdownContainer: {
     width: 140,
@@ -600,4 +329,22 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: "#333",
   },
+
+
+  helloText:{
+    color: '#FFFFFFA3',
+    fontSize: 12,
+    lineHeight: 16,
+    fontWeight:400,
+    fontFamily: 'Geist'
+
+  },
+  nameText:{
+    color: '#FFFFFF',
+    fontFamily: 'Geist',
+    fontWeight: 600,
+    fontSize: 16,
+    lineHeight: 24,
+   
+  }
 });
