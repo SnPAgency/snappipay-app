@@ -146,13 +146,13 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: 80,
     paddingBottom: 40,
     paddingHorizontal: 20,
   },
   logo: {
-    width: width * 0.5,
-    height: 40,
+    width: width * 0.4,
+    height: 30,
     maxWidth: 250,
   },
   scrollView: {
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingHorizontal: 40,
-    paddingBottom: 50,
+    paddingBottom: 80,
   },
   continueButton: {
     backgroundColor: '#755ae2',

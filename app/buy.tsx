@@ -13,48 +13,38 @@ import {
 
 // Type fix for React 19 compatibility
 const TouchableOpacityFixed = TouchableOpacity as any;
-
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import btclogo from "../assets/img/btc.png";
 import ethLogo from "../assets/eth.png";
 import usdtLogo from "../assets/usdt.png";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+
+
+
+
 
 // Cryptocurrency options
 const cryptoOptions = [
-  { id: 'btc', name: 'Bitcoin', symbol: 'BTC',  logo: btclogo },
-  { id: 'eth', name: 'Ethereum', symbol: 'ETH', logo: ethLogo },
-  { id: 'usdt', name: 'Tether', symbol: 'USDT',  logo: usdtLogo },
+  { id: 'btc', name: 'Bitcoin', symbol: 'BTC', price: 100000, logo: btclogo },
+  { id: 'eth', name: 'Ethereum', symbol: 'ETH', price: 4000, logo: ethLogo },
+  { id: 'usdt', name: 'Tether', symbol: 'USDT', price: 1, logo: usdtLogo },
 ];
 
-// Network options
-const networkOptions = [
-  { id: 'ethereum', name: 'Ethereum (ERC20)', symbol: 'ETH', },
-  { id: 'bsc', name: 'BNB Smart Chain (BEP20)', symbol: 'BSC', },
-  { id: 'polygon', name: 'Polygon', symbol: 'MATIC',  },
-  { id: 'arbitrum', name: 'Arbitrum One', symbol: 'ARB',  },
-  { id: 'optimism', name: 'Optimism', symbol: 'OP',  },
-  { id: 'avalanche', name: 'Avalanche C-Chain', symbol: 'AVAX',  },
-  { id: 'tron', name: 'Tron (TRC20)', symbol: 'TRX',  },
-  { id: 'solana', name: 'Solana', symbol: 'SOL', },
-];
 
-const Receive = () => {
+
+const Buy = () => {
   const [selectedCrypto, setSelectedCrypto] = useState(cryptoOptions[0]);
-  const [selectedNetwork, setSelectedNetwork] = useState(networkOptions[0]);
   const [showCryptoModal, setShowCryptoModal] = useState(false);
-  const [showNetworkModal, setShowNetworkModal] = useState(false);
   const [amount, setAmount] = useState('');
 
   const handleCryptoSelect = (crypto: any) => {
     setSelectedCrypto(crypto);
     setShowCryptoModal(false);
-  };
-
-  const handleNetworkSelect = (network: any) => {
-    setSelectedNetwork(network);
-    setShowNetworkModal(false);
   };
 
   return (
@@ -73,6 +63,7 @@ const Receive = () => {
             {/* Left: Back Arrow */}
             <Link href="/home" asChild>
                 <TouchableOpacity>
+               
                 <Image source={require('../assets/back-arrow.png')} style={{height:30, width:30}}/>
                 </TouchableOpacity>
             </Link>
@@ -87,9 +78,10 @@ const Receive = () => {
                   fontFamily: "Manrope",
                 }}
             >
-              Receive Crypto
+                Buy Crypto
             </Text>
 
+           
             <View style={{ width: 24 }} />
             </View>
               <ScrollView
@@ -100,6 +92,7 @@ const Receive = () => {
                 contentContainerStyle={{ paddingBottom: 20 }}
               >
 
+       
          {/* Cryptocurrency Selection */}
          <View style={styles.container}>
           <Text style={styles.label}>
@@ -128,70 +121,198 @@ const Receive = () => {
         </View>
 
 
-
-
-
-        {/* Select Network */}
+        {/* Payment Amount */}
         <View style={styles.container}>
-          <Text style={styles.label}>
-            Select Network
-          </Text>
-          <TouchableOpacityFixed
-            onPress={() => setShowNetworkModal(true)}
-            style={styles.textInput}
+          <View
+          style={{flexDirection: "row", 
+            justifyContent: "space-between", 
+            alignItems: "center",}}>
+               <Text
+            style={styles.label}
           >
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-              <View style={{
-                width: 40,
-                height: 40,
-                borderRadius: '100%',
-                backgroundColor: "#374151",
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <Text style={{
-                  fontFamily: "Manrope",
-                  fontSize: 10,
-                  color: "#ffffff",
-                  fontWeight: "600",
-                }}>
-                  {selectedNetwork.symbol}
-                </Text>
-              </View>
-              <View style={{ gap: 2 }}>
-                <Text
-                  style={{
-                    fontFamily: "Manrope",
-                    fontSize: 14,
-                    color: "#ffffff",
-                  }}
-                >
-                  {selectedNetwork.name}
-                </Text>
-              
-              </View>
+             Amount
+          </Text>
+        
+          </View>
+         
+          <View
+          style={{
+            backgroundColor: "#0d0d0d",
+            borderRadius: 8,
+            paddingHorizontal: 10,
+            paddingVertical: 18,
+            borderWidth: 1,
+            borderColor: '#374151',
+            width: "100%",
+          }}
+          >
+            <View>
+              <TextInput
+                value={amount}
+                onChangeText={setAmount}
+                placeholderTextColor={"#ADAEBC"}
+               style={{color: "#fff", fontFamily: "Manrope"}}
+                placeholder='0.00'
+                keyboardType="numeric"
+              />
+            
             </View>
-            <Entypo name='chevron-down' size={24} color='#9CA3AF' />
-          </TouchableOpacityFixed>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: "Manrope",
+                  color: "#9CA3AF",
+                }}
+              >
+                {amount ? (parseFloat(amount || '0') / selectedCrypto.price).toFixed(6) : '0.000'} {selectedCrypto.symbol}
+              </Text>
+             
+            </View>
+
+          </View>
+        </View>
+
+        
+
+        {/* Transaction Summary */}
+        <View
+          style={{
+            margin:10,
+            paddingHorizontal: 10,
+            paddingVertical: 18,
+            backgroundColor: "#0d0d0d",
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: '#374151',
+          }}
+        >
+          <Text
+            style={{
+              color: "#f9fafB",
+              fontFamily: "Manrope",
+              fontSize: 14,
+              lineHeight:24,
+              fontWeight: 400,
+            }}
+          >
+            Transaction Summary
+          </Text>
+          <View style={{ marginTop: 16, gap: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
+                }}
+              >
+                Amount
+              </Text>
+              <Text
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
+              >
+                ₦{amount || '0.00'}
+              </Text>
+            </View>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
+                }}
+              >
+               You will get
+              </Text>
+              <Text
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
+              >
+                10.56 <Text>BTC</Text>
+              </Text>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#f9fafB",
+                  fontFamily: "Manrope",
+                  fontSize: 14,
+                  lineHeight:24,
+                  fontWeight: 400,
+                }}
+              >
+                Charge:
+              </Text>
+              <Text
+                style={{ color: "#FFFFFF", fontFamily: "Manrope" }}
+              >
+                ₦1.25
+              </Text>
+            </View>
+          
+          </View>
+        </View>
+
+        {/* Send Payment Button */}
+        <View style={{ margin: 10, paddingBottom: 20 }}>
+            <TouchableOpacityFixed
+             
+              style={{
+                backgroundColor: '#755ae2',
+                paddingVertical: 18,
+                paddingHorizontal: 32,
+                borderRadius: 8,
+                alignItems: 'center',
+                justifyContent: 'center',
+                shadowColor: '#ffffff',
+               
+              }}
+            >
+                  <Text
+                    style={{
+                      color: "white",
+                      textAlign: "center",
+                      fontSize: 14,
+                      fontFamily: "Manrope",
+                      fontWeight:600,
+                      lineHeight: 24,
+                    }}
+                  >
+                    Buy Crypto
+                  </Text>
+            </TouchableOpacityFixed>
         </View>
       </ScrollView>
 
-       {/* Receive Crypto Button */}
-       <View style={{ margin: 10, paddingBottom: 20 }}>
-            {/* Buy Crypto Button - Fixed at Bottom */}
-      <View style={styles.bottomButtonContainer}>
-        <Link 
-          href={'/depositUSDT'}
-          asChild
-        >
-          <TouchableOpacityFixed style={styles.buyButton}>
-            <Text style={styles.buyButtonText}>
-              Continue
-            </Text>
-          </TouchableOpacityFixed>
-        </Link>
-      </View>
-        </View>
+
 
       {/* Cryptocurrency Selection Modal */}
      <Modal
@@ -283,122 +404,16 @@ const Receive = () => {
                     }}>
                       {item.name}
                     </Text>
-                   
+                    {/* <Text style={{
+                      fontFamily: "Manrope",
+                      fontSize: 12,
+                      color: "#9CA3AF",
+                      marginTop: 2,
+                    }}>
+                      {item.symbol} • ${item.price.toLocaleString()}
+                    </Text> */}
                   </View>
                   {selectedCrypto.id === item.id && (
-                    <FontAwesome name='check-circle' size={22} color='#755AE2' />
-                  )}
-                </TouchableOpacityFixed>
-              )}
-            />
-          </View>
-        </View>
-      </Modal>
-    
-
-
-
-      {/* Network Selection Modal */}
-      <Modal
-        visible={showNetworkModal}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setShowNetworkModal(false)}
-      >
-        <View style={{
-          flex: 1,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          justifyContent: 'flex-end',
-        }}>
-          <View style={{
-            backgroundColor: "#0f0c1d",
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            maxHeight: "85%",
-            paddingBottom: 40,
-          }}>
-            {/* Modal Header */}
-            <View style={{ 
-              padding: 20, 
-              borderBottomWidth: 1, 
-              borderBottomColor: "#374151",
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}>
-              <Text style={{
-                color: "#ffffff",
-                fontSize: 20,
-                fontWeight: "600",
-                fontFamily: "Manrope",
-              }}>
-                Select Network
-              </Text>
-              <TouchableOpacityFixed onPress={() => setShowNetworkModal(false)}>
-                <FontAwesome name='times' size={24} color='#9CA3AF' />
-              </TouchableOpacityFixed>
-            </View>
-
-            {/* Results count */}
-            <Text style={{
-              color: "#9CA3AF",
-              fontSize: 14,
-              paddingHorizontal: 20,
-              marginTop: 10,
-              fontFamily: "Manrope",
-            }}>
-              {networkOptions.length} network{networkOptions.length !== 1 ? 's' : ''} available
-            </Text>
-
-            {/* Networks List */}
-            <FlatList
-              data={networkOptions}
-              keyExtractor={(item) => item.id}
-              showsVerticalScrollIndicator={false}
-              style={{ marginTop: 10 }}
-              renderItem={({ item, index }) => (
-                <TouchableOpacityFixed
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    paddingHorizontal: 20,
-                    paddingVertical: 15,
-                    borderBottomWidth: index === networkOptions.length - 1 ? 0 : 1,
-                    borderBottomColor: "#374151",
-                    backgroundColor: selectedNetwork.id === item.id ? "#374151" : "transparent",
-                  }}
-                  onPress={() => handleNetworkSelect(item)}
-                >
-                  <View style={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '100%',
-                    backgroundColor: "#374151",
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginRight: 12,
-                    padding:5
-                  }}>
-                    <Text style={{
-                      fontFamily: "Manrope",
-                      fontSize: 11,
-                      color: "#ffffff",
-                      fontWeight: "600",
-                    }}>
-                      {item.symbol}
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{
-                      fontFamily: "Manrope",
-                      fontSize: 16,
-                      color: "#ffffff",
-                    }}>
-                      {item.name}
-                    </Text>
-                  
-                  </View>
-                  {selectedNetwork.id === item.id && (
                     <FontAwesome name='check-circle' size={22} color='#755AE2' />
                   )}
                 </TouchableOpacityFixed>
@@ -412,7 +427,7 @@ const Receive = () => {
   );
 };
 
-export default Receive;
+export default Buy;
 
 const styles = StyleSheet.create({
   container: {
@@ -436,26 +451,5 @@ const styles = StyleSheet.create({
     color:"#fff",
     width: "100%",
   },
-  bottomButtonContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    paddingBottom: 40,
-    backgroundColor: "#020202",
-  },
-  buyButton: {
-    backgroundColor: '#755ae2',
-    paddingVertical: 18,
-    paddingHorizontal: 32,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buyButtonText: {
-    color: "white",
-    textAlign: "center",
-    fontSize: 14,
-    fontFamily: "Manrope",
-    fontWeight: 600,
-    lineHeight: 24,
-  },
-});
+
+})

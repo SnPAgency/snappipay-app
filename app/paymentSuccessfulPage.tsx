@@ -1,20 +1,18 @@
 import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
 
 import { Link, router } from "expo-router";
-import { Picker } from '@react-native-picker/picker';
-import SelectCountry from "../components/selectCountry";
+import { useLocalSearchParams } from 'expo-router';
 
 
 const { width, height } = Dimensions.get('window');
 
 const PaymentSuccessful = () => {
-
+    const { feedback, output } = useLocalSearchParams();
     return(
         <View style={styles.container}>
             <View
             style={{
-                paddingTop: 80,
+                paddingTop: 40,
                 paddingHorizontal: 20,
                 marginBottom:20
             }}
@@ -29,8 +27,8 @@ const PaymentSuccessful = () => {
 
             <View style={styles.middleSection}>
             <Image source={require('../assets/successful.png')} style={{height: 120, width: 120}}/>
-            <Text style={styles.text1}>Payment Successful</Text>
-            <Text style={styles.text2}>You just sent 5000 NGN to Jamal Musiala</Text>
+            <Text style={styles.text1}>{feedback}</Text>
+            <Text style={styles.text2}>{output}</Text>
             </View>
 
            
@@ -38,7 +36,15 @@ const PaymentSuccessful = () => {
         
             
             <View style={styles.bottomSection}>
-            <Link href={'/failedTransaction'} style={styles.continueButton}>
+            <Link  href={{
+                  pathname: '/failedTransaction',
+                  params: { 
+                    feedback: 'Payment Failed!',
+                    output: 'Purchase of 0.0003 BTC failed.'
+                  }
+                }} 
+            
+            style={styles.continueButton}>
                 <Text style={styles.continueButtonText}>Continue</Text>
              </Link>
             </View>

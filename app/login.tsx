@@ -75,7 +75,15 @@ const Login = () => {
               </View>
             </Link>
 
-              <Link href={'/paymentSuccessfulPage'}>
+              <Link 
+                 href={{
+                  pathname: '/paymentSuccessfulPage',
+                  params: { 
+                    feedback: 'Payment Successful!',
+                    output: 'Your payment of $50 has been processed.'
+                  }
+                }}
+              >
               <Text style={styles.description}>By continuing, you agree with our terms of service and Privacy Policy</Text>
               </Link>
 
