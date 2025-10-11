@@ -389,7 +389,7 @@ const Pay = () => {
           justifyContent: 'flex-end',
         }}>
           <View style={{
-            backgroundColor: "#1F2937",
+            backgroundColor: "#0f0c1d",
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             maxHeight: "85%",

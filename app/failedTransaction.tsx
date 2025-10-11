@@ -1,20 +1,19 @@
 import { StyleSheet, Text, TextInput, View, Image, TouchableOpacity, ImageBackground, Dimensions } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { useLocalSearchParams } from 'expo-router';
 
 import { Link, router } from "expo-router";
-import { Picker } from '@react-native-picker/picker';
-import SelectCountry from "../components/selectCountry";
+
 
 
 const { width, height } = Dimensions.get('window');
 
 const failedTransaction = () => {
-
+    const { feedback, output } = useLocalSearchParams();
     return(
         <View style={styles.container}>
             <View
             style={{
-                paddingTop: 80,
+                paddingTop: 40,
                 paddingHorizontal: 20,
                 marginBottom:20
             }}
@@ -29,8 +28,8 @@ const failedTransaction = () => {
 
             <View style={styles.middleSection}>
             <Image source={require('../assets/failed.png')} style={{height: 80, width: 80, marginBottom: 10}}/>
-            <Text style={styles.text1}>Payment Failed</Text>
-            <Text style={styles.text2}>Payment to Jamal Musiala could not be completed</Text>
+            <Text style={styles.text1}>{feedback}</Text>
+            <Text style={styles.text2}>{output}</Text>
             </View>
 
            
@@ -38,11 +37,11 @@ const failedTransaction = () => {
             <View style={styles.bottomSection}>
             <View style={styles.bottomSection}>
             <View style={styles.buttonRow}>
-                <Link href={'/failedTransaction'} style={[styles.cancelButton, { flex: 4 }]}>
+                <Link href={'/home'} style={[styles.cancelButton, { flex: 4 }]}>
                 <Text style={styles.continueButtonText}>Cancel</Text>
                 </Link>
 
-                <Link href={'/failedTransaction'} style={[styles.retryButton, { flex: 6 }]}>
+                <Link href={'/home'} style={[styles.retryButton, { flex: 6 }]}>
                 <Text style={styles.continueButtonText}>Retry</Text>
                 </Link>
             </View>

@@ -123,13 +123,13 @@ const Home = () => {
 
 
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 20, gap: 10 }}>
-            <Link href={"#"} asChild>
+            <Link href={"/pay"} asChild>
               <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
                 <View
                   style={{
                     borderRadius: 25,
                     paddingVertical: 14,
-                    paddingHorizontal: 25,
+                    paddingHorizontal: 15,
                     backgroundColor: "#927de8",
                     flexDirection: "row",
                     justifyContent: "center",
@@ -138,19 +138,21 @@ const Home = () => {
                     width: "100%", // Make button fill container width
                   }}
                 >
-                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Send</Text>
+                  
                   <Image source={require('../../assets/send-arrow.png')} style={{width: 17, height: 17}}/>
+                  
                 </View>
+                <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist', marginTop: 5, }}>Send</Text>
               </TouchableOpacity>
             </Link>
             
-            <Link href={"#"} asChild>
+            <Link href={"/receive"} asChild>
               <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
                 <View
                   style={{
                     borderRadius: 25,
                     paddingVertical: 14,
-                    paddingHorizontal: 25,
+                    paddingHorizontal: 15,
                     backgroundColor: "#927de8",
                     flexDirection: "row",
                     justifyContent: "center",
@@ -159,19 +161,20 @@ const Home = () => {
                     width: "100%",
                   }}
                 >
-                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Receive</Text>
+                 
                   <Image source={require('../../assets/receive-arrow.png')} style={{width: 17, height: 17}}/>
                 </View>
+                <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist', marginTop:5 }}>Receive</Text>
               </TouchableOpacity>
             </Link>
-            
-            <Link href={"#"} asChild>
+
+            <Link href={"/buy"} asChild>
               <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
                 <View
                   style={{
                     borderRadius: 25,
                     paddingVertical: 14,
-                    paddingHorizontal: 25,
+                    paddingHorizontal: 15,
                     backgroundColor: "#927de8",
                     flexDirection: "row",
                     justifyContent: "center",
@@ -180,9 +183,32 @@ const Home = () => {
                     width: "100%",
                   }}
                 >
-                  <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist' }}>Pay</Text>
+                 
+                  <Image source={require('../../assets/buy.png')} style={{width: 17, height: 17}}/>
+                </View>
+                <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist', marginTop: 5 }}>Buy</Text>
+              </TouchableOpacity>
+            </Link>
+            
+            <Link href={"/pay"} asChild>
+              <TouchableOpacity style={{ alignItems: "center", gap: 4, flex: 1 }}>
+                <View
+                  style={{
+                    borderRadius: 25,
+                    paddingVertical: 14,
+                    paddingHorizontal: 15,
+                    backgroundColor: "#927de8",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 4,
+                    width: "100%",
+                  }}
+                >
+                 
                   <Image source={require('../../assets/pay-icon.png')} style={{width: 17, height: 17}}/>
                 </View>
+                <Text style={{ fontSize: 14, color: "#FFFFFF", fontWeight: 500, fontFamily: 'Geist', marginTop: 5 }}>Pay</Text>
               </TouchableOpacity>
             </Link>
           </View>
