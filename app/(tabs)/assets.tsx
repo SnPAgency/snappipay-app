@@ -13,7 +13,7 @@ import {
 const TouchableOpacityFixed = TouchableOpacity as any;
 import { Link } from "expo-router";
 import AssetRow from "../../components/AssetsRow";
-import { useAsset } from "../../hooks/useAsset";
+import { currency, useAsset } from "../../hooks/useAsset";
 
 const Assets = () => {
   const { assets } = useAsset();
@@ -98,10 +98,12 @@ const Assets = () => {
             type={item.symbol.toLowerCase()}
             symbol={item.symbol}
             network={item.network}
-            price='$1.01'
-            change='-$0.10'
+            price={`${item.assetToFiat.toFixed(2)}`}
             balance={item.balance}
-            value='$1000.10'
+            value={`${(parseFloat(item.balance) * item.assetToFiat).toFixed(
+              2
+            )}`}
+            currency={currency}
           />
         )}
       />

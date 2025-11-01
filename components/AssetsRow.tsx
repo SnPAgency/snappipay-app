@@ -15,10 +15,10 @@ interface AssetRowProps {
   symbol: string;
   network: string;
   price: string;
-  change: string;
   changeColor?: string;
   balance: string;
   value: string;
+  currency: string;
 }
 
 const AssetRow: React.FC<AssetRowProps> = ({
@@ -27,10 +27,10 @@ const AssetRow: React.FC<AssetRowProps> = ({
   symbol,
   network,
   price,
-  change,
   changeColor = "#ef4444",
   balance,
   value,
+  currency,
 }) => {
   /** choose the correct icon depending on type or use override */
   const renderIcon = () => {
@@ -60,10 +60,12 @@ const AssetRow: React.FC<AssetRowProps> = ({
             <Text style={styles.network}>{network}</Text>
           </View>
           <View style={styles.priceRow}>
-            <Text style={styles.price}>{price}</Text>
-            <Text style={[styles.change, { color: changeColor }]}>
-              {change}
+            <Text style={styles.price}>
+              {currency} {price}
             </Text>
+            {/* <Text style={[styles.change, { color: changeColor }]}>
+              {change}
+            </Text> */}
           </View>
         </View>
       </View>
@@ -71,7 +73,9 @@ const AssetRow: React.FC<AssetRowProps> = ({
       {/* Right section */}
       <View style={styles.right}>
         <Text style={styles.balance}>{balance}</Text>
-        <Text style={styles.value}>{value}</Text>
+        <Text style={styles.value}>
+          {currency} {value}
+        </Text>
       </View>
     </View>
   );

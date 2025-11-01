@@ -23,6 +23,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link } from "expo-router";
 import TransactionRow from "../../components/TxnRow";
 import { useAppKit, useProvider } from "@reown/appkit-react-native";
+import { useAsset } from "../../hooks/useAsset";
 
 const { width, height } = Dimensions.get("window");
 const Home = () => {
@@ -38,6 +39,7 @@ const Home = () => {
   ]);
 
   const { provider } = useProvider();
+  const { totalBalance } = useAsset();
 
   console.log("provider", provider);
   return (
@@ -134,7 +136,7 @@ const Home = () => {
                 >
                   $
                 </Text>
-                1,234.56
+                {totalBalance.toFixed(2)}
               </Text>
             </View>
 

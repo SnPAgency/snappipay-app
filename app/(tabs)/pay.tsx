@@ -72,6 +72,7 @@ const Pay = () => {
     PaymentMethod.BANK_TRANSFER
   );
   const [balance, setBalance] = useState("0.00");
+  const [fiatToAsset, setFiatToAsset] = useState(0);
 
   const { provider } = useProvider();
   const { address, isConnected, chainId } = useAccount();
@@ -85,7 +86,9 @@ const Pay = () => {
         (asset) => asset.symbol === selectedCrypto.symbol
       );
       if (asset) {
+        console.log("asset", asset.fiatToAsset);
         setBalance(parseFloat(asset.balance).toFixed(2));
+        setFiatToAsset(asset.fiatToAsset);
       }
     }
   }, [assets]);
@@ -324,21 +327,19 @@ const Pay = () => {
                 }}
               >
                 {amount
-                  ? (parseFloat(amount || "0") / selectedCrypto.price).toFixed(
-                      6
-                    )
+                  ? (parseFloat(amount || "0") / fiatToAsset).toFixed(2)
                   : "0.000"}{" "}
                 {selectedCrypto.symbol}
               </Text>
-              <Text
+              {/* <Text
                 style={{
                   fontSize: 14,
                   fontFamily: "Manrope",
                   color: "#9CA3AF",
                 }}
               >
-                Fee: NGN10.0
-              </Text>
+                Fee: {selectedCrypto.symbol}0.0
+              </Text> */}
             </View>
           </View>
         </View>
@@ -385,7 +386,10 @@ const Pay = () => {
                 Amount
               </Text>
               <Text style={{ color: "#FFFFFF", fontFamily: "Manrope" }}>
-                ₦{amount || "0.00"}
+                {amount
+                  ? (parseFloat(amount || "0") / fiatToAsset).toFixed(2)
+                  : "0.00"}{" "}
+                {selectedCrypto.symbol}
               </Text>
             </View>
 
@@ -407,7 +411,7 @@ const Pay = () => {
                 Network Fee
               </Text>
               <Text style={{ color: "#FFFFFF", fontFamily: "Manrope" }}>
-                ₦2.50
+                0.00 {selectedCrypto.symbol}
               </Text>
             </View>
             <View
@@ -428,7 +432,7 @@ const Pay = () => {
                 Processing Fee
               </Text>
               <Text style={{ color: "#FFFFFF", fontFamily: "Manrope" }}>
-                ₦1.25
+                0.00 {selectedCrypto?.symbol}
               </Text>
             </View>
             <View
@@ -457,7 +461,10 @@ const Pay = () => {
                 Total
               </Text>
               <Text style={{ color: "#FFFFFF", fontFamily: "Manrope" }}>
-                ₦{amount ? (parseFloat(amount) + 3.75).toFixed(2) : "3.75"}
+                {amount
+                  ? (parseFloat(amount || "0") / fiatToAsset).toFixed(2)
+                  : "0.00"}{" "}
+                {selectedCrypto.symbol}
               </Text>
             </View>
           </View>
