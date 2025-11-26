@@ -75,7 +75,7 @@ const Login = () => {
             Connect your wallet or Sign In with your Google account to continue
           </Text>
 
-          <Link href={"#"} style={{ marginBottom: 30 }}>
+          <Link href={"/home"} style={{ marginBottom: 30 }}>
             <View style={styles.Button1}>
               <Image
                 style={styles.googleIcon}
