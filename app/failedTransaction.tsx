@@ -70,6 +70,7 @@ middleSection: {
   bottomSection: {
     paddingHorizontal: 20,
     paddingBottom: 40,
+    marginBottom:0,
   },
 
   buttonRow: {

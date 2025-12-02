@@ -283,7 +283,13 @@ const Buy = () => {
 
         {/* Send Payment Button */}
         <View style={{ margin: 10, paddingBottom: 20 }}>
-            <TouchableOpacityFixed
+            <Link href={{
+                  pathname: '/paymentSuccessfulPage',
+                  params: { 
+                    feedback: 'Payment Successful!',
+                    output: 'Your payment of $50 has been processed.'
+                  }
+            }}
              
               style={{
                 backgroundColor: '#755ae2',
@@ -308,7 +314,7 @@ const Buy = () => {
                   >
                     Buy Crypto
                   </Text>
-            </TouchableOpacityFixed>
+            </Link>
         </View>
       </ScrollView>
 

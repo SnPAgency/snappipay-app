@@ -149,7 +149,7 @@ const CopyUSDT: React.FC = () => {
       {/* Footer Buttons */}
       <View style={styles.bottomSection}>
         <View style={styles.buttonRow}>
-          <Link href={"/notificationDemo"} style={[styles.cancelButton, { flex: 4 }]}>
+          <Link href={"/home"} style={[styles.cancelButton, { flex: 4 }]}>
             <Text style={styles.continueButtonText}>Go Back</Text>
           </Link>
 

@@ -34,6 +34,7 @@ const Home = () => {
     { label: "Cardano", value: "Cardano" },
     { label: "Polkadot", value: "Polkadot" },
   ]);
+  const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   return (
     <ScrollView
       style={{
@@ -100,7 +101,12 @@ const Home = () => {
                 Available Balance
               </Text>
     
-                <Image source={require('../../assets/open-eye-icon.png')} style={{height: 20, width: 20}}/>
+              <TouchableOpacity onPress={() => setIsBalanceVisible(!isBalanceVisible)}>
+              <Image 
+                source={require('../../assets/open-eye-icon.png')} 
+                style={{height: 20, width: 20}}
+              />
+            </TouchableOpacity>
             </View>
 
             <View style={{ gap: 10 }}>
@@ -113,9 +119,26 @@ const Home = () => {
                   fontWeight: "600",
                 }}
               >
-                <Text
-                style={{fontSize: 14, fontFamily: "Geist", fontWeight: "400"}}
-                >$</Text>1,234.56
+              <Text
+                style={{
+                  fontSize: 28,
+                  lineHeight: 36,
+                  color: "#FFFFFF",
+                  fontFamily: "Geist",
+                  fontWeight: "600",
+                }}
+              >
+                {isBalanceVisible ? (
+                  <>
+                    <Text style={{fontSize: 14, fontFamily: "Geist", fontWeight: "400"}}>
+                      $
+                    </Text>
+                    1,234.56
+                  </>
+                ) : (
+                  "******"
+                )}
+              </Text>
               </Text>
             
             </View>

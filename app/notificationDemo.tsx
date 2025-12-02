@@ -46,7 +46,7 @@ const NotificationDemo = () => {
             </Link>
       
 
-        {/* Custom Example */}
+    
         <TouchableOpacity
           style={[styles.button, styles.customButton]}
           onPress={() =>
